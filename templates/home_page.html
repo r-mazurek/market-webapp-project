@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market App</title>
+</head>
+<body>
+    <h1>Welcome to the Market App</h1>
+    <h2>Today's date: {{ today }}. The time is: {{time_now}}</h2>
+    <h2>
+        Today is 
+        {% if is_trading_day == 1 %}
+            a trading day.
+            <h2>
+                The session has
+                {% if did_session_start == 1 %}
+                    already started.
+                    <h2>Time to session end: {{hours}}h {{minutes}}m</h2>
+                {% else %}
+                    not started yet.
+                    <h2>Time to session start: {{hours}}h {{minutes}}m</h2>
+                {% endif %}
+            </h2>
+        {% else %}
+            not a trading day.
+        {% endif %}
+    </h2>
+    <h2>
+        ES is
+        {% if es_price_change >= 0 %}
+            up {{es_price_change}}%
+        {% else %}
+            down {{es_price_change}}%
+        {% endif %}
+        since yesterday.
+    </h2>
+    <h2>
+        NQ is
+        {% if nq_price_change >= 0 %}
+            up {{nq_price_change}}%
+        {% else %}
+            down {{nq_price_change}}%
+        {% endif %}
+        since yesterday.
+    </h2>
+</body>
+</html>
