@@ -1,12 +1,13 @@
-body {
-    background-color: darkslategrey;
-    font-family: Arial, sans-serif;
+* {background-color: #121212}
+
+.title, .subtitle {
+    color: #e0e0e0;
 }
-h1 {
-    color: whitesmoke;
-    text-align: center;
+
+.positive {
+    color: rgb(0, 126, 0);
 }
-h2 {
-    color: lightgray;
-    text-align: center;
+
+.negative {
+    color: rgb(255, 31, 31);
 }

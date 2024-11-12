@@ -17,7 +17,7 @@ def home():
     session_end_time = datetime.combine(datetime.now(UTC).date(), time(21), UTC)
     now = datetime.now(UTC)
 
-    did_session_start = now > session_start_time
+    did_session_start = now > session_start_time and now < session_end_time
 
     time_to_session_end = session_end_time - now
     time_to_session_start = session_start_time - now
@@ -32,6 +32,8 @@ def home():
     session_start_timestamp = int(session_start_time.timestamp())
     session_end_timestamp = int(session_end_time.timestamp())
 
+    did_session_end = now > session_end_time
+
     data = {
         'today': today,
         'display_time': display_time,
@@ -42,7 +44,8 @@ def home():
         'hours': hours,
         'minutes': minutes,
         'nq_price_change': nq_price_change,
-        'es_price_change': es_price_change
+        'es_price_change': es_price_change,
+        'did_session_end': did_session_end
     }
 
     return render_template('home_page.html', **data)
