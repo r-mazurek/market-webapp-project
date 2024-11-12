@@ -5,22 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .positive {color: rgb(0, 126, 0)}
+        .negative {color: rgb(255, 31, 31)}
+    </style>
 </head>
 <body>
     <h1>Welcome to the Market App</h1>
-    <h2>Today's date: {{ today }}. The time is: {{time_now}}</h2>
+    <h2>Today's date: {{ today }}. The time is: {{ display_time }}</h2>
     <h2>
         Today is 
-        {% if is_trading_day == 1 %}
+        {% if is_trading_day %}
             a trading day.
             <h2>
                 The session has
-                {% if did_session_start == 1 %}
+                {% if did_session_start %}
                     already started.
-                    <h2>Time to session end: {{hours}}h {{minutes}}m</h2>
+                    <h2 id="countdown" class="countdown"></h2>
                 {% else %}
                     not started yet.
-                    <h2>Time to session start: {{hours}}h {{minutes}}m</h2>
+                    <h2 id="countdown" class="countdown"></h2>
                 {% endif %}
             </h2>
         {% else %}
@@ -30,20 +35,65 @@
     <h2>
         ES is
         {% if es_price_change >= 0 %}
-            up {{es_price_change}}%
+            <span class="positive">
+                up {{ es_price_change }}%
+            </span>
         {% else %}
-            down {{es_price_change}}%
+            <span class="negative">
+                down {{ es_price_change }}%
+            </span>
         {% endif %}
         since yesterday.
     </h2>
     <h2>
         NQ is
         {% if nq_price_change >= 0 %}
-            up {{nq_price_change}}%
+            <span class="positive">
+                up {{ nq_price_change }}%
+            </span>
         {% else %}
-            down {{nq_price_change}}%
+            <span class="negative">
+                down {{ nq_price_change }}%
+            </span>
         {% endif %}
         since yesterday.
     </h2>
+
+    <script>
+        // Session start and end times (from Flask in UNIX timestamps)
+        const sessionStartTime = {{ session_start_timestamp }};
+        const sessionEndTime = {{ session_end_timestamp }};
+
+        // Function to calculate and display countdown
+        function updateCountdown() {
+            const now = Math.floor(Date.now() / 1000); // Current time in seconds
+            let prefixText = "Time to session end: "; // Default text
+
+            if (now < sessionStartTime) {
+                const timeRemaining = sessionStartTime - now;
+                prefixText = "Time until session start: ";
+                displayTime(timeRemaining, prefixText);
+            } else if (now < sessionEndTime) {
+                const timeRemaining = sessionEndTime - now;
+                displayTime(timeRemaining, prefixText);
+            } else {
+                document.getElementById("countdown").textContent = "The session has ended.";
+                clearInterval(countdownInterval);
+            }
+        }
+
+        function displayTime(timeRemaining, prefixText) {
+            const hours = Math.floor(timeRemaining / 3600);
+            const minutes = Math.floor((timeRemaining % 3600) / 60);
+            const seconds = timeRemaining % 60;
+
+            document.getElementById("countdown").textContent = 
+                `${prefixText} ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown(); 
+
+    </script>
 </body>
 </html>
