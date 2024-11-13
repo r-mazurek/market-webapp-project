@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Market App</title>
 
-    <!-- Link to Bulma CSS CDN -->
+    <!-- Link to Bulma CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
 
-    <!-- Link to your custom stylesheet -->
+    <!-- Link to CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- Link to icons-->
@@ -17,16 +17,16 @@
 
     <style>
         body {
-            background-color: #121212; /* Dark background */
-            color: #e0e0e0; /* Light text color */
+            background-color: #121212;
+            color: #e0e0e0;
         }
         .section {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh; /* Full viewport height */
-            padding: 5vh 2vw; /* Padding for spacing */
-            background-color: #121212; /* Consistent background */
+            min-height: 100vh;
+            padding: 5vh 2vw;
+            background-color: #121212;
         }
         .container {
             text-align: center;
@@ -39,7 +39,7 @@
         }
         .title, .subtitle, .countdown {
             color: #e0e0e0;
-            font-size: 2.5vw; /* Consistent text size */
+            font-size: 2.5vw;
         }
     </style>
 </head>
@@ -112,7 +112,7 @@
                 {% if nq_price_change >= 0 %}
                     <i class="fa fa-caret-square-o-up"></i>
                 {% else %}
-                    <i class="	fa fa-caret-square-o-down"></i>
+                    <i class="fa fa-caret-square-o-down"></i>
                 {% endif %}
                 NQ is
                 {% if nq_price_change >= 0 %}
@@ -125,7 +125,6 @@
         </div>
     </section>
 
-    <!-- Countdown Script -->
     <script>
         const sessionStartTime = {{ session_start_timestamp }};
         const sessionEndTime = {{ session_end_timestamp }};
@@ -153,11 +152,12 @@
             const seconds = timeRemaining % 60;
 
             document.getElementById("countdown").textContent = 
-                `${<i class="fas fa-clock"></i>}${prefixText} ${hours}h ${minutes}m ${seconds}s`;
+                `${prefixText} ${hours}h ${minutes}m ${seconds}s`;
         }
 
         const countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown(); 
     </script>
+
 </body>
 </html>
