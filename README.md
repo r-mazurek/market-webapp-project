@@ -6,6 +6,9 @@ This project is a market monitoring tool with a modern, responsive design. The a
 
 The Market App leverages Flask for server-side processing and provides a dark-themed, mobile-friendly UI designed with the Bulma CSS framework. It displays market conditions, dynamically adjusts trading session countdowns, and visually indicates price changes with icons and color changes. It demonstrates a practical approach to presenting data on a web interface. Its usecase is directly correlated with my own interest in the financial markets.
 
+## Preview:
+![screenshot](project_photos/project_photo_main.png)
+
 ## Features
 
 * Dynamic Market Information: Updates on market conditions and price changes for key indices, presented in an intuitive and engaging format.
